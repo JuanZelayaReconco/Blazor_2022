@@ -1,0 +1,62 @@
+﻿ @page "/Usuarios"
+
+<AuthorizeView Roles="Administrador">
+
+    <Authorized Context="AuthenticationState">
+        <h3>Lista de Usuarios</h3>
+
+        <!--Botón para ir al formulario para agregar un usuario.-->
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <a href="/Usuarios/Nuevo" class="btn btn-primary m-1">Agregar Usuario</a>
+            </div>
+        </div>
+
+        <!--Los simbolos "<!--" y "- -> (unidos)" para comentar-->
+        @if(listaUsuarios == null)
+        {
+            <p>No existen usuarios en el sistema</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead> <!--Tabla-->
+                    <tr> <!--Fila-->
+                        <th>Código</th> <!--Columna-->
+                        <th>Nombre</th>
+                        <th>Rol</th>
+                        <th>¿Está activo?</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach(var user in listaUsuarios)
+                    {
+                        <tr>
+                            <td>@user.Codigo</td> <!--"td" para llenar la tabla con registros-->
+                            <td>@user.Nombre</td>
+                            <td>@user.Rol</td>
+                            <td>
+                                @if(@user.EstaActivo)
+                                {
+                                    <span class="oi oi-circle-check" style="color: green;"></span>
+                                }
+                                else
+                                {
+                                    <span class="oi oi-circle-x" style="color: red;"></span>
+                                }
+                            </td>
+
+                            <!--Botón para editar usuarios-->
+                            <th>
+                                <a class="btn btn-success" href="@($"/Usuarios/Editar/{user.Codigo}")">Editar</a>
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+    </Authorized>
+
+</AuthorizeView>

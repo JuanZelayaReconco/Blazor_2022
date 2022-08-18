@@ -3,13 +3,24 @@
 <PageTitle>Blazor</PageTitle>
 
 <div class="page">
-    <div class="sidebar">
+    <div style="background-image:none;background-color:cadetblue;" class="sidebar">
         <NavMenu />
     </div>
 
     <main>
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <AuthorizeView>
+                <Authorized>
+                    <span class="ml-md-auto">
+                        Usuario Conectado: @context.User.Claims.First().Value
+                        <a href="/account/logout">Salir</a>
+                    </span>
+                </Authorized>
+
+                <NotAuthorized>
+                    <a href="login">Iniciar Sesión</a>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
 
         <article class="content px-4">
